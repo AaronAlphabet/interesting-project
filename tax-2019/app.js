@@ -57,7 +57,7 @@ function createTable() {
       p2, // 速算扣除数
       taxBase.toFixed(2), // 参与扣税的工资
       tax.toFixed(2), // 税费
-      (salaryValue - tax).toFixed(2), // 到手工资
+      (salaryValue - tax - free01Value).toFixed(2), // 到手工资
       (tax / salaryValue * 100).toFixed(2) + "%",
     ];
 
