@@ -52,12 +52,12 @@ function createTable() {
       salaryValue, // 工资
       free01Value, // 五险一金
       free02Value, // 专项扣除
-      sumTax, // 累计额度
+      sumTax.toFixed(2), // 累计额度
       p1, // 预扣率
       p2, // 速算扣除数
-      taxBase, // 参与扣税的工资
-      tax, // 税费
-      salaryValue - tax, // 到手工资
+      taxBase.toFixed(2), // 参与扣税的工资
+      tax.toFixed(2), // 税费
+      (salaryValue - tax).toFixed(2), // 到手工资
       (tax / salaryValue * 100).toFixed(2) + "%",
     ];
 
