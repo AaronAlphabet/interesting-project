@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      border: 1px solid #000;
+      position: absolute;
+      left: 30px;
+      top: 50px;
+      width: 1000px;
+      height: 800px;
+    }
+
+    #dragEl {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #000;
+      left: 10px;
+      top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <div id="dragEl"></div>
+</div>
+</body>
+</html>
+<script>
+  const container = document.getElementById('container');
+  const dragEl = document.getElementById('dragEl');
+
+  dragEl.onmousedown = function (ev) {
+    const thisEl = this;
+    const width = thisEl.clientWidth;
+    const height = thisEl.clientHeight;
+
+    // 边界
+    const maxLeft = 1000 - width;
+    const maxTop = 800 - height;
+
+    // 元素当前的位置
+    const offsetX = thisEl.offsetLeft;
+    const offsetY = thisEl.offsetTop;
+
+    // 点击的位置
+    const currentX = ev.clientX;
+    const currentY = ev.clientY;
+
+    // 计算位置
+    const moveFn = function (event) {
+      // 移动的位置
+      const moveX = event.clientX;
+      const moveY = event.clientY;
+
+      // 位置 = (移动位置 - 点击的位置) + 元素的初始位置
+      // 移动位置 - 点击的位置 ===> 这个计算的鼠标移动的位置差--变化量
+      let posX = moveX - currentX + offsetX;
+      let posY = moveY - currentY + offsetY;
+
+      // 边界位置判断
+      if (posX >= maxLeft) posX = maxLeft;
+      if (posX <= 0) posX = 0;
+      if (posY >= maxTop) posY = maxTop;
+      if (posY <= 0) posY = 0;
+
+      // 对元素的位置进行赋值
+      thisEl.style.left = posX + 'px';
+      thisEl.style.top = posY + 'px';
+    };
+
+    // move
+    thisEl.addEventListener('mousemove', moveFn, false);
+
+    // 停止监听move
+    thisEl.onmouseup = function () {
+      thisEl.removeEventListener('mousemove', moveFn);
+    };
+    thisEl.onmouseout = function () {
+      thisEl.removeEventListener('mousemove', moveFn);
+    };
+  };
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
