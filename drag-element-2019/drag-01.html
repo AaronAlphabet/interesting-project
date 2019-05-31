@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>drag</title>
   <style>
     * {
       margin: 0;
@@ -35,17 +35,18 @@
 </body>
 </html>
 <script>
-  const container = document.getElementById('container');
   const dragEl = document.getElementById('dragEl');
 
-  dragEl.onmousedown = function (ev) {
-    const thisEl = this;
-    const width = thisEl.clientWidth;
-    const height = thisEl.clientHeight;
+  const width = dragEl.offsetWidth;
+  const height = dragEl.offsetHeight;
 
-    // 边界
-    const maxLeft = 1000 - width;
-    const maxTop = 800 - height;
+  // 边界
+  const maxLeft = 1000 - width;
+  const maxTop = 800 - height;
+
+  dragEl.onmousedown = function (ev) {
+    ev.stopPropagation();
+    const thisEl = this;
 
     // 元素当前的位置
     const offsetX = thisEl.offsetLeft;
@@ -56,10 +57,10 @@
     const currentY = ev.clientY;
 
     // 计算位置
-    const moveFn = function (event) {
+    const moveFn = function (ev) {
       // 移动的位置
-      const moveX = event.clientX;
-      const moveY = event.clientY;
+      const moveX = ev.clientX;
+      const moveY = ev.clientY;
 
       // 位置 = (移动位置 - 点击的位置) + 元素的初始位置
       // 移动位置 - 点击的位置 ===> 这个计算的鼠标移动的位置差--变化量
@@ -77,32 +78,19 @@
       thisEl.style.top = posY + 'px';
     };
 
+    // document-mouseup
+    // 移出边界后取消事件监听--->在任何时候，鼠标抬起之后就应该取消事件
+    const docMouseupHandle = function () {
+      document.removeEventListener('mousemove', moveFn);
+      document.removeEventListener('mouseup', docMouseupHandle);
+    };
+
     // move
-    thisEl.addEventListener('mousemove', moveFn, false);
+    document.addEventListener('mousemove', moveFn, false);
 
     // 停止监听move
-    thisEl.onmouseup = function () {
-      thisEl.removeEventListener('mousemove', moveFn);
-    };
-    thisEl.onmouseout = function () {
-      thisEl.removeEventListener('mousemove', moveFn);
-    };
+    document.addEventListener('mouseup', docMouseupHandle, false);
   };
 
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
