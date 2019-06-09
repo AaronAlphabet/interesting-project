@@ -1,41 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>drag</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+import {
+  select,
+} from './../../common/util-dom.js';
 
-    #container {
-      border: 1px solid #000;
-      position: absolute;
-      left: 30px;
-      top: 50px;
-      width: 1000px;
-      height: 800px;
-    }
-
-    #dragEl {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      border: 1px solid #000;
-      left: 10px;
-      top: 10px;
-    }
-  </style>
-</head>
-<body>
-<div id="container">
-  <div id="dragEl"></div>
-</div>
-</body>
-</html>
-<script>
-  const dragEl = document.getElementById('dragEl');
+const dragEl =  select('#dragEl');
 
   const width = dragEl.offsetWidth;
   const height = dragEl.offsetHeight;
@@ -91,6 +58,3 @@
     // 停止监听move
     document.addEventListener('mouseup', docMouseupHandle, false);
   };
-
-
-</script>

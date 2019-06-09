@@ -1,4 +1,7 @@
-const select = selector => document.querySelector(selector);
+import {
+  select
+} from './../../common/util-dom.js';
+
 const form = select("#form");
 const output = select("#output");
 
